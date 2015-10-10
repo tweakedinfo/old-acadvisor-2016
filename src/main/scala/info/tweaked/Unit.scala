@@ -50,29 +50,31 @@ trait Prerequisite {
 }
 
 object Prerequisite {
-  class Or(prereqs:Seq[Prerequisite]) extends Prerequisite {
+
+  case object Yes extends Prerequisite {
+    def apply(units:Seq[Unit]) = true
+  }
+
+  case object No extends Prerequisite {
+    def apply(units:Seq[Unit]) = false
+  }
+
+  case class Or(prereqs:Seq[Prerequisite]) extends Prerequisite {
     def apply(units:Seq[Unit]) = prereqs.foldLeft(false)(_ || _.apply(units))
   }
 
-  class And(prereqs:Seq[Prerequisite]) extends Prerequisite {
+  case class And(prereqs:Seq[Prerequisite]) extends Prerequisite {
     def apply(units:Seq[Unit]) = prereqs.forall(_.apply(units))
   }
 
-  class minCP(cps:Int) extends Prerequisite {
+  case class minCP(cps:Int) extends Prerequisite {
     def apply(units:Seq[Unit]) = units.foldLeft(0)(_ + _.cp) >= cps
   }
 
-}
+  case class Contains(required: Unit*) extends Prerequisite {
+    def apply(units:Seq[Unit]) = units.diff()
+  }
 
-
-class Prereq(val predicate: (Seq[Unit]) => Boolean) {
-  def or(p:Prereq) = new Prereq(units => this.predicate(units) || p.predicate(units))
-  def and(p:Prereq)= new Prereq(units => this.predicate(units) && p.predicate(units))
-}
-
-object Prereq {
-  val yes = new Prereq(units => true)
-  val no = new Prereq(units => false)
 }
 
 
