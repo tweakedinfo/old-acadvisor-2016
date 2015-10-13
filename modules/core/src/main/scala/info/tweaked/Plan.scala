@@ -30,8 +30,15 @@ case class Plan(name:String, terms:Termful*) {
     }
     probs.toSeq
   }
+
+  def contains(unit:Unit) = terms.contains(unit)
+
 }
 
 /** A Term with a selection of Units to take in that Term */
-case class Termful(term:Term, units:Seq[Unit])
+case class Termful(term:Term, units:Seq[Unit]) {
+
+  def contains(unit:Unit) = units.contains(unit)
+
+}
 

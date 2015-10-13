@@ -19,6 +19,8 @@ object Unit {
   /** An unlisted unit */
   def x(s:String) = Unit(s, T1 ++ T2 ++ T3)
 
+  val Unchosen = x("Unchosen")
+
   val any = x("Any")
   val Elective = x("Elective")
   val Listed = x("Listed")

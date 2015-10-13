@@ -1,5 +1,6 @@
 package au.edu.une.cs.acadvisor
 
+import au.edu.une.cs.acadvisor.views.Phases
 import japgolly.scalajs.react.React
 import org.scalajs.dom.{document, window}
 import japgolly.scalajs.react.vdom.prefix_<^._
@@ -10,10 +11,15 @@ import scala.scalajs.js.annotation.JSExport
 
 object Main extends JSApp {
 
+  val renderNode =  document.getElementById("render-here")
+
   def main():Unit = {
-    window.alert("foo");
-    println("Hello")
-    React.render(<.div("boo"), document.getElementById("render-here"))
+    println("Javascript started")
+    rerender()
+  }
+
+  def rerender() = {
+    React.render(Phases.structure, renderNode)
   }
 
 }
