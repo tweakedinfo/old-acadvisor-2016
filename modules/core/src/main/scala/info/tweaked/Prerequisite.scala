@@ -5,6 +5,10 @@ package info.tweaked
  */
 trait Prerequisite {
   def apply(units: Seq[Unit]): Boolean
+
+  def or (p:Prerequisite) = Prerequisite.Or(Seq(this, p))
+
+  def and (p:Prerequisite) = Prerequisite.And(Seq(this, p))
 }
 
 object Prerequisite {

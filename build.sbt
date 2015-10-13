@@ -46,6 +46,7 @@ lazy val csJs = cs.js
 
 lazy val reactjs = project.in(file("modules/reactjs"))
   .settings(commonSettings:_*)
+  .dependsOn(coreJvm, csJvm)
   .enablePlugins(ScalaJSPlugin)
   .settings(
     persistLauncher := true,

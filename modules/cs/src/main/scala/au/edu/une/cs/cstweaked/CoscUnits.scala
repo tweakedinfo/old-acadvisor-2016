@@ -1,7 +1,8 @@
 package au.edu.une.cs.cstweaked
 
 import info.tweaked.Unit
-import info.tweaked.{T1, T2, T3}
+import info.tweaked.Term.{T1, T2, T3}
+import info.tweaked.Prerequisite._
 
 /**
  * Holds definitions of COSC units
@@ -94,12 +95,12 @@ object CoscUnits {
   val COSC310 = Unit(
     name = "COSC310",
     terms = T1,
-    require = COSC220 and cp(72) //96
+    require = COSC220 and minCP(72) //96
   )
   val COSC320 = Unit(
     name = "COSC320",
     terms = T1 ++ T2,
-    require = COSC220 and COSC310 and cp(96) // 24
+    require = COSC220 and COSC310 and minCP(96) // 24
   )
   val COSC330 = Unit(
     name = "COSC330",
@@ -109,7 +110,7 @@ object CoscUnits {
   val COSC340 = Unit(
     name = "COSC340",
     terms = T1,
-    require = AMTH140 and COSC240 and cp(72)
+    require = AMTH140 and COSC240 and minCP(72)
   )
   val COSC350 = Unit(
     name = "COSC350",
@@ -127,12 +128,12 @@ object CoscUnits {
   val COSC370 = Unit(
     name = "COSC370",
     terms = T1,  // TODO: Change form
-    require = COSC220 and cp(72)
+    require = COSC220 and minCP(72)
   )
   val COSC380 = Unit(
     name = "COSC380",
     terms = T2,  // TODO: Change form
-    require = (AMTH150 or COSC110) and (MTHS120 or MTHS121) and cp(48)
+    require = (AMTH150 or COSC110) and (MTHS120 or MTHS121) and minCP(48)
   )
 
 
