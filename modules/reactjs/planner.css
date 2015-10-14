@@ -1,0 +1,91 @@
+* {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.charcoal {
+  background-color: #242424;
+}
+.orange {
+  background-color: #FFB26C;
+}
+.red {
+  background-color: #CC5349;
+}
+.blue {
+  background-color: #4D8BFF;
+}
+.green {
+  background-color: #559944;
+}
+.purple {
+  background-color: #7E3DCC;
+}
+
+
+.year {
+  border: 1px solid #ddd;
+  margin-top: 5px;
+}
+
+.year-number {
+  text-align: center;
+  background-color: #eee;
+  font-weight: bold;
+}
+
+.term-name {
+  text-align: center;
+  font-weight: bold;
+}
+
+.unit-choice {
+  min-height: 45px;
+  padding: 3px;
+  margin: 2px;
+  border: 1px solid #eee;
+  color: #242424;
+}
+
+.unit-choice.core {
+  color: #242424;
+}
+.unit-choice.maths {
+  color: #CC5349;
+}
+
+.unit-choice.sd {
+  color: #559944;
+}
+
+.unit-choice.am {
+  color: #7E3DCC;
+}
+
+.unit-choice.sd.am {
+  color: #7E3DCC;
+}
+
+.unit-code {
+  opacity: 0.7;
+  font-size: 12px;
+}
+
+.unit-name {
+  font-size: 15px;
+}
+
+.named-rule {
+  padding: 3px;
+  margin: 2px;
+  border: 1px solid #eee;
+}
+
+.rule-name {
+  background-color: #efe;
+  font-weight: bold;
+  line-height: 30px;
+}
+
+.fright {
+  float: right;
+}

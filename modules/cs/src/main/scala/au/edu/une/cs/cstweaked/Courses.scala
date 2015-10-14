@@ -1,11 +1,59 @@
 package au.edu.une.cs.cstweaked
 
 import info.tweaked.Term._
-import info.tweaked.Plan
+import info.tweaked._
 import info.tweaked.Unit._
 import CoscUnits._
 
 object Courses {
+
+  val bcompColorRule = (u:Unit) => {
+    if (bcompCore.contains(u)) {
+      "core"
+    } else if (bcompMaths.contains(u)) {
+      "maths"
+    } else if (appMod.contains(u) && softMaj.contains(u)) {
+      "sd am"
+    } else if (appMod.contains(u)) {
+      "am"
+    } else if (softMaj.contains(u)) {
+      "sd"
+    } else ""
+  }
+
+  val bcompCore = NamedRule("BCompSc Core",
+    Prerequisite.Contains(AMTH140, COSC110, COSC120, COSC210, COSC220, COSC230, COSC240, COSC310, COSC320)
+  )
+
+  val bcompMaths = NamedRule("Maths Requirement",
+    Prerequisite.NumFrom(3, MTHS120, MTHS130, STAT100),
+    extra = Seq(MTHS110),
+    notes = Seq("MTHS110 is an elective for students not ready for MTHS120")
+  )
+
+  val softMaj = NamedRule("Software Development Major",
+    Prerequisite.NumFrom(5, COSC250, COSC260, COSC330, COSC340, COSC350, COSC360, COSC370)
+  )
+
+  val appMod = NamedRule("Applied Modelling Major",
+    Prerequisite.Contains(COSC250, COSC330, COSC380, STAT210, STAT330)
+  )
+
+  val bCompAM = Course("BCompSc (Applied Modelling)",
+    Seq(bcompCore, bcompMaths, appMod),
+    coloringRule = bcompColorRule
+  )
+
+  val bCompSD = Course("BCompSc (Applied Modelling)",
+    Seq(bcompCore, bcompMaths, softMaj),
+    coloringRule = bcompColorRule
+  )
+
+  val bCompDual = Course("BCompSc (Software Development & Applied Modelling)",
+    Seq(bcompCore, bcompMaths, softMaj, appMod),
+    coloringRule = bcompColorRule
+  )
+
 
   val plans = Seq(
     Plan("Bachelor of Education (Secondary Science) (Computing Technology Software Design and Mathematics)",
@@ -63,7 +111,7 @@ object Courses {
 
     Plan("BComp Dual Major MTH110 c",
       T1(COSC110, MTHS110, Elective, Listed),
-      T2(AMTH140, COSC120, STAT100, MTHS121),
+      T2(AMTH140, COSC120, STAT100, MTHS120),
       T1(COSC210, COSC230, COSC250, STAT210),
       T2(COSC220, COSC240, COSC260, COSC330),
       T1(COSC310, COSC370, COSC340, STAT330),
@@ -93,7 +141,7 @@ object Courses {
 
     Plan("BComp Applied Modelling MTH120 part time T2 Amendment sample",
       T2(COSC110, AMTH140),//1
-      T1(COSC120, Elective), T2(STAT100, MTHS121),//2
+      T1(COSC120, Elective), T2(STAT100, MTHS120),//2
       T1(COSC210, COSC230), T2(COSC240, Listed),//3
       T1(COSC250, Listed), T2(COSC220, Listed),//4
       T1(STAT210, Listed), T2(COSC380, COSC330),//5
@@ -106,7 +154,7 @@ object Courses {
 
     Plan("BComp Dual Degree MTH120 part time T2 Amendment sample",
       T2(STAT100, AMTH140),//1
-      T1(COSC110, Elective), T2(COSC120, MTHS121),//2
+      T1(COSC110, Elective), T2(COSC120, MTHS120),//2
       T1(COSC210, COSC230), T2(COSC240, COSC260),//3
       T1(COSC250, STAT210), T2(COSC220, COSC360),//4
       T1(COSC340, COSC370), T2(COSC380, COSC330),//5

@@ -18,7 +18,7 @@ object Main extends JSApp {
     rerender()
   }
 
-  def rerender() = {
+  def rerender():Unit = {
     React.render(Phases.structure, renderNode)
   }
 
