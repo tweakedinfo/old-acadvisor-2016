@@ -1,6 +1,7 @@
 package au.edu.une.cs.cstweaked
 
-import info.tweaked.Unit._
+import info.tweaked.TUnit._
+import CoscUnits._
 
 object CompUnits {
 
@@ -19,11 +20,17 @@ object CompUnits {
   val comp393 = old("COMP393", "Software Project Management")
   val comp395 = old("COMP395", "Information Technology Project")
 
-  val oldUnits = Seq(
-    math101, math102, math120,
+  val oldMathUnits = Seq(
+    math101, math102, math120
+  )
+
+  val oldCompUnits = Seq(
     comp131, comp132, comp170,
     comp280, comp284, comp389, comp393, comp395
   )
 
+  val currentUnits = Seq(
+    AMTH140
+  )
 
 }

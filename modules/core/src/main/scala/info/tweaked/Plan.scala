@@ -1,11 +1,11 @@
 package info.tweaked
 
-import info.tweaked.Problem.{Restricted, PrerequisiteNotMet, WrongTerm}
+import info.tweaked.Problem.{AlreadyDone, Restricted, PrerequisiteNotMet, WrongTerm}
 
 /**
  * A programme of study
  */
-case class Plan(name:String, terms:Termful*) {
+case class Plan(name:String, terms:Seq[Termful], standing:Seq[TUnit] = Seq.empty) {
 
   def printCheck() = {
     println(name)
@@ -17,7 +17,7 @@ case class Plan(name:String, terms:Termful*) {
   def problems:Seq[Problem] = {
     import scala.collection.mutable
 
-    val buf: mutable.Buffer[Unit] = mutable.Buffer.empty
+    val buf: mutable.Buffer[TUnit] = mutable.Buffer.empty
     val probs: mutable.Buffer[Problem] = mutable.Buffer.empty
 
     for {
@@ -26,24 +26,38 @@ case class Plan(name:String, terms:Termful*) {
     } yield problem
   }
 
-  def contains(unit:Unit) = terms.contains(unit)
+  def contains(unit:TUnit) = standing.contains(unit) || terms.exists(_.contains(unit))
 
+  def until(unitChoice: UnitChoice) = terms.takeWhile(!_.contains(unitChoice))
+
+  def termful(unitChoice: UnitChoice) = terms.find(_.contains(unitChoice))
 }
 
-case class UnitChoice(term:Term, var unit:Unit) {
+class UnitChoice(val term:Term, var unit:TUnit) {
 
-  def isEmpty = unit == Unit.Unchosen
+  def isEmpty = unit == TUnit.Unchosen
 
   def termInvalid = if (unit.terms.contains(term)) None else Some(WrongTerm(this))
 
-  def prereqNotMet(complete:Seq[Unit]) = if (unit.require.apply(complete)) None else Some(PrerequisiteNotMet(this))
+  def prereqNotMet(complete:Seq[TUnit]) = unit.prereqNotMet(complete)
 
-  def restricted(inclusive:Seq[Unit]) = if (unit.restrict.apply(inclusive)) Some(Restricted(this)) else None
+  def restricted(inclusive:Seq[TUnit]) = unit.restricted(inclusive)
 
-  def problems(complete:Seq[Unit], inclusive:Seq[Unit]):Seq[Problem] = {
-    termInvalid.toSeq ++ prereqNotMet(complete) ++ restricted(inclusive)
+  def alreadyDone(complete:Seq[TUnit]) = unit.alreadyDone(complete)
+
+  def problemsFor(unit:TUnit, complete:Seq[Termful], current:Termful):Seq[Problem] = {
+    val completeU = complete.flatMap(_.units)
+    unit.prereqNotMet(completeU).toSeq ++ unit.alreadyDone(completeU) ++ unit.restricted(completeU ++ current.units)
   }
 
+  def problems(complete:Seq[TUnit], inclusive:Seq[TUnit]):Seq[Problem] = {
+    termInvalid.toSeq ++ prereqNotMet(complete) ++ alreadyDone(complete) ++ restricted(inclusive)
+  }
+
+}
+
+object UnitChoice {
+  def apply(term:Term, unit:TUnit) = new UnitChoice(term, unit)
 }
 
 
@@ -52,7 +66,9 @@ case class Termful(term:Term, unitChoices:Seq[UnitChoice]) {
 
   def units = unitChoices.map(_.unit)
 
-  def contains(unit:Unit) = unitChoices.exists(_.unit == unit)
+  def contains(unit:TUnit) = unitChoices.exists(_.unit == unit)
+
+  def contains(unitChoice: UnitChoice) = unitChoices.contains(unitChoice)
 
   def problems(index:Int, terms:Termful*) = {
     val complete = terms.slice(0, index).flatMap(_.units)

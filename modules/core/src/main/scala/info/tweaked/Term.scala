@@ -4,7 +4,7 @@ import scala.language.implicitConversions
 
 /** A teaching period */
 case class Term(name:String) {
-  def apply(units:Unit*) = Termful(this, units.map(UnitChoice(this, _)))
+  def apply(units:TUnit*) = Termful(this, units.map(UnitChoice(this, _)))
 }
 
 object Term {

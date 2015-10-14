@@ -45,6 +45,21 @@
   border: 1px solid #eee;
   color: #242424;
 }
+.unit-choice.taken {
+  background-color: #559944;
+}
+.unit-choice.selected {
+  border: 2px solid #FFB26C;
+}
+.unit-choice.unselectable {
+  opacity: 0.3;
+}
+.unit-choice.selectable.valid-sel {
+  border-color: #559944;
+}
+.unit-choice.selectable.invalid-sel {
+  border-color: #CC5349;
+}
 
 .unit-choice.core {
   color: #242424;
