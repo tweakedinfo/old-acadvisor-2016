@@ -5,6 +5,8 @@ import info.tweaked.Problem.{AlreadyDone, Restricted, PrerequisiteNotMet}
 import scala.language.implicitConversions
 import Term._
 
+import scala.util.Random
+
 /** A teaching unit */
 case class TUnit(
    code:String,
@@ -15,6 +17,7 @@ case class TUnit(
    restrict: Prerequisite = Prerequisite.No,
    description:Option[String] = None,
    languages:Seq[String] = Seq.empty,
+   fuzz:String = "",
    cp:Int = 6
 ) {
   def prereqNotMet(complete:Seq[TUnit]) = if (require.apply(complete)) None else Some(PrerequisiteNotMet(this))
@@ -33,14 +36,14 @@ object TUnit {
   implicit def prereq(u:TUnit):Prerequisite = Prerequisite.Contains(u)
 
   /** An unlisted unit */
-  def x(s:String) = TUnit(s, terms=T1 ++ T2 ++ T3)
+  def x(s:String) = TUnit(s, terms=T1 ++ T2 ++ T3, fuzz = Random.nextString(8))
 
   def old(c:String, s:String) = TUnit(c, terms=T1 ++ T2 ++ T3, name=Some(s))
 
   val Unchosen = x("Unchosen")
 
   val any = x("Any")
-  val Elective = x("Elective")
+  def elective = x("Elective")
   val Listed = x("Listed")
   val Prescribed = x("Prescribed")
 

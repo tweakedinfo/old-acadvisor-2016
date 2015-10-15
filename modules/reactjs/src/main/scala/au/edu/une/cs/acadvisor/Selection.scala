@@ -2,7 +2,7 @@ package au.edu.une.cs.acadvisor
 
 import au.edu.une.cs.cstweaked.CoscUnits._
 import au.edu.une.cs.cstweaked.{CompUnits, Courses}
-import info.tweaked.{TUnit, UnitChoice, Plan}
+import info.tweaked.{Prerequisite, TUnit, UnitChoice, Plan}
 import info.tweaked.Term.{T1, T2, T3}
 import info.tweaked.TUnit._
 import scala.collection.mutable
@@ -19,9 +19,12 @@ object Selection {
   val taken = mutable.Set.empty[TUnit]
   def toggleTaken(u:TUnit) = {
     if (taken.contains(u)) taken.remove(u) else taken.add(u)
-
+    val standing = rules.standing(taken.toSeq:_*)
+    plan = plan.copy(standing = standing)
     Main.rerender()
   }
+  def standing = plan.standing
+
 
   val courses = Seq(Courses.bCompSD, Courses.bCompAM, Courses.bCompDual)
 
@@ -33,6 +36,8 @@ object Selection {
     } rules = c
     Main.rerender()
   }
+
+  def checkRuleAgainstPlan(r:Prerequisite) = r.apply(plan.units)
 
   var unitsPerTerm:Int = 4
 
@@ -50,6 +55,17 @@ object Selection {
   }
 
   var selection:Selection = NoSel
+
+  def setSelectedUC(u:TUnit) = {
+    selection match {
+      case SelUnitChoice(uc) => {
+        uc.unit = u
+        selection = NoSel
+        Main.rerender()
+      }
+      case _ => {}
+    }
+  }
 
   def selected(u:TUnit) = selection == SelUnit(u)
   def selected(uc:UnitChoice) = selection == SelUnitChoice(uc)
@@ -100,9 +116,9 @@ object Selection {
     selection match {
       case SelUnit(u) => {
         val upto = plan.until(uc)
-        val termful = plan.termful(uc)
+        val termful = plan.find(uc)
         termful match {
-          case Some(t) => uc.problemsFor(u, upto, t).isEmpty
+          case Some(t) => uc.problemsFor(u, plan.standing, upto, t).isEmpty
           case _ => false
         }
       }
@@ -114,9 +130,9 @@ object Selection {
     selection match {
       case SelUnitChoice(uc) => {
         val upto = plan.until(uc)
-        val termful = plan.termful(uc)
+        val termful = plan.find(uc)
         termful match {
-          case Some(t) => uc.problemsFor(u, upto, t).isEmpty
+          case Some(t) => uc.problemsFor(u, plan.standing, upto, t).isEmpty
           case _ => false
         }
       }
@@ -142,6 +158,28 @@ object Selection {
         )
       })
     )
+  }
+
+  /**
+   * Greedily attempts to pack in all units as early as legal
+   */
+  def pack(units:Seq[TUnit]) = {
+    selection = NoSel
+    for {
+      t <- plan.terms
+      uc <- t.unitChoices if uc.unit == TUnit.Unchosen
+      past = plan.until(uc).flatMap(_.units) ++ plan.standing
+    } {
+      val current = t.units
+      val inclusive = past ++ current
+      val candidate = rules.units.find { u =>
+        !current.contains(u) &&
+        u.validFor(past, inclusive).isEmpty &&
+        u.terms.contains(uc.term)
+      }
+      for { u <- candidate } uc.unit = u
+    }
+    Main.rerender()
   }
 
 }

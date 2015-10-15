@@ -96,9 +96,14 @@
 }
 
 .rule-name {
-  background-color: #efe;
   font-weight: bold;
   line-height: 30px;
+}
+.named-rule.valid .rule-name {
+  background-color: #efe;
+}
+.named-rule.invalid .rule-name {
+  background-color: #fee;
 }
 
 .fright {

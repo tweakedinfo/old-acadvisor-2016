@@ -1,6 +1,8 @@
 package au.edu.une.cs.cstweaked
 
 import info.tweaked.TUnit._
+import info.tweaked.Prerequisite._
+import info.tweaked.Standing._
 import CoscUnits._
 
 object CompUnits {

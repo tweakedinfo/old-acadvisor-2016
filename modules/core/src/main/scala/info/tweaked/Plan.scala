@@ -30,7 +30,12 @@ case class Plan(name:String, terms:Seq[Termful], standing:Seq[TUnit] = Seq.empty
 
   def until(unitChoice: UnitChoice) = terms.takeWhile(!_.contains(unitChoice))
 
-  def termful(unitChoice: UnitChoice) = terms.find(_.contains(unitChoice))
+  /** The Termful that contains this UnitChoice */
+  def find(unitChoice: UnitChoice) = terms.find(_.contains(unitChoice))
+  
+  /** All the units in this plan */
+  def units = terms.flatMap(_.units) ++ standing
+
 }
 
 class UnitChoice(val term:Term, var unit:TUnit) {
@@ -45,8 +50,8 @@ class UnitChoice(val term:Term, var unit:TUnit) {
 
   def alreadyDone(complete:Seq[TUnit]) = unit.alreadyDone(complete)
 
-  def problemsFor(unit:TUnit, complete:Seq[Termful], current:Termful):Seq[Problem] = {
-    val completeU = complete.flatMap(_.units)
+  def problemsFor(unit:TUnit, standing:Seq[TUnit], complete:Seq[Termful], current:Termful):Seq[Problem] = {
+    val completeU = complete.flatMap(_.units) ++ standing
     unit.prereqNotMet(completeU).toSeq ++ unit.alreadyDone(completeU) ++ unit.restricted(completeU ++ current.units)
   }
 

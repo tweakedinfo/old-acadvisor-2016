@@ -23,7 +23,7 @@ object CoscUnits {
   val MTHS120 = TUnit(
     code = "MTHS120",
     name = Some("Calculus and Linear Algebra 1"),
-    terms = T1
+    terms = T1 ++ T2
   )
 
   val MTHS130 = TUnit(
@@ -155,7 +155,7 @@ object CoscUnits {
   val COSC370 = TUnit(
     code = "COSC370",
     name = Some("User Experience and Interaction Design"),
-    terms = T1,  // TODO: Change form
+    terms = T1,
     require = COSC220 and minCP(72)
   )
   val COSC380 = TUnit(
