@@ -14,7 +14,7 @@ object VPlan {
       case SelUnit(_) => if (Selection.validSel(u)) " valid-sel " else " invalid-sel "
       case _ => ""
     }
-    
+
     <.div(^.cls := "unit-choice " + Selection.rules.coloringRule(u.unit) + selected + selectable + validSel,
       ^.onClick --> Selection.select(u),
       <.div(^.cls := "unit-code", u.unit.code),
