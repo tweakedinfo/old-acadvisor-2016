@@ -34,7 +34,7 @@ object VRules {
       case _ => ""
     }
 
-    <.div(^.cls := "unit-choice " + Selection.rules.coloringRule(u) + selectedC + selectable + validSel,
+    <.div(^.cls := "unit " + Selection.rules.coloringRule(u) + selectedC + selectable + validSel,
       ^.onClick --> Selection.select(u),
       <.div(^.cls := "unit-code", u.code),
       <.div(^.cls := "unit-name", u.name),

@@ -53,8 +53,33 @@ lazy val reactjs = project.in(file("modules/reactjs"))
     persistLauncher in Test := false
   )
 
+lazy val sjsProjects = Seq(reactjs)
+
+
+
+lazy val play = project.in(file("modules/play"))
+  .enablePlugins(PlayScala)
+  .settings(commonSettings:_*)
+  .aggregate(sjsProjects.map(sbt.Project.projectToRef):_*)
+  .dependsOn(csJvm, coreJvm)
+  .settings(
+    scalaJSProjects := sjsProjects,
+    pipelineStages := Seq(scalaJSProd, gzip),
+    libraryDependencies ++= Seq(
+      "com.vmunier" %% "play-scalajs-scripts" % "0.1.0"
+    ),
+    routesImport ++= Seq(
+      "com.wbillingsley.handy._",
+      "com.wbillingsley.handy.appbase._",
+      "com.assessory.api._",
+      "com.assessory.play.PathBinders._",
+      "scala.language.reflectiveCalls"
+    )
+  )
+
 lazy val aggregate = project.in(file("."))
   .settings(commonSettings:_*)
   .aggregate(coreJvm, csJvm, reactjs)
 
 scalaJSStage in Global := FastOptStage
+
