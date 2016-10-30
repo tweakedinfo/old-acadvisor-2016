@@ -1,9 +1,3 @@
-import _root_.playscalajs.ScalaJSPlay
-import _root_.playscalajs.ScalaJSPlay.autoImport._
-import _root_.playscalajs.ScalaJSPlay.autoImport._
-import org.scalajs.sbtplugin.ScalaJSPlugin
-import org.scalajs.sbtplugin.ScalaJSPlugin.AutoImport._
-import org.scalajs.sbtplugin.ScalaJSPlugin.AutoImport._
 
 lazy val commonSettings = Seq(
   scalaVersion := "2.11.7",
@@ -66,7 +60,6 @@ lazy val play = project.in(file("modules/play"))
     scalaJSProjects := sjsProjects,
     pipelineStages := Seq(scalaJSProd, gzip),
     libraryDependencies ++= Seq(
-      "com.vmunier" %% "play-scalajs-scripts" % "0.1.0"
     ),
     routesImport ++= Seq(
       "com.wbillingsley.handy._",
