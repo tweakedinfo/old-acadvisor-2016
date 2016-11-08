@@ -1,10 +1,9 @@
 package info.tweaked
 
-import info.tweaked.Problem.{AlreadyDone, Restricted, PrerequisiteNotMet, WrongTerm}
 
 /**
  * A programme of study
- */
+ *
 case class Plan(name:String, terms:Seq[Termful], standing:Seq[TUnit] = Seq.empty) {
 
   def printCheck() = {
@@ -83,3 +82,4 @@ case class Termful(term:Term, unitChoices:Seq[UnitChoice]) {
   }
 }
 
+*/

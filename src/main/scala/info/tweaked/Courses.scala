@@ -1,7 +1,9 @@
 package info.tweaked
 
 import BComp._
+import info.tweaked.model.plan.Plan
 
+/*
 object Courses {
 
   val plans = Seq(
@@ -230,3 +232,4 @@ object Courses {
 
 
 }
+*/

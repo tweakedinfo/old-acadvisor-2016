@@ -1,0 +1,13 @@
+
+@import "common/_corporatestyle";
+@import "common/_previewstyle";
+
+.up-from-bottom {
+  height: 0px;
+  position: relative;
+  top: -100px;
+  overflow: display;
+}
+.center {
+  text-align: center;
+}

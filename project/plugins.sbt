@@ -19,6 +19,8 @@ addSbtPlugin("com.typesafe.sbt" % "sbt-gzip" % "1.0.0")
 // Use Less CSS
 addSbtPlugin("com.typesafe.sbt" % "sbt-less" % "1.0.0")
 
+addSbtPlugin("org.irundaia.sbt" % "sbt-sassify" % "1.4.2")
+
 
 // --- DEV TOOLS ---
 

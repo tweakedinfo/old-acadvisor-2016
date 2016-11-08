@@ -1,81 +1,12 @@
 package info.tweaked
 
 import scala.language.implicitConversions
-
+/*
 case class Termful(term:Term, units:Seq[Unit])
 
-case class Plan(name:String, terms:Termful*) {
 
-  def printCheck = {
-    println(name)
-    println("---")
-    for (p <- problems) println(p)
-    println("")
-  }
 
-  def problems:Seq[String] = {
-    import scala.collection.mutable
 
-    val buf:mutable.Buffer[Unit] = mutable.Buffer.empty
-    val probs:mutable.Buffer[String] = mutable.Buffer.empty
-    for (termful <- terms) {
-      for (unit <- termful.units) {
-        if (!unit.terms.contains(termful.term)) {
-          probs.append(s"${unit.name} is not offered in ${termful.term.toString}")
-        }
-        if (!unit.require.predicate(buf.toSeq)) {
-          probs.append(s"${unit.name} prerequisites have not been met")
-        }
-      }
-      buf.append(termful.units:_*)
-    }
-    probs.toSeq
-  }
-}
-
-trait Term {
-  def apply(units:Unit*) = Termful(this, units)
-}
-
-object T1 extends Term { override def toString = "T1"}
-object T2 extends Term { override def toString = "T2"}
-object T3 extends Term { override def toString = "T3"}
-
-object Term {
-  implicit def toSeq(t:Term) = Seq(t)
-}
-
-trait Prerequisite {
-  def apply(units: Seq[Unit]): Boolean
-}
-
-object Prerequisite {
-
-  case object Yes extends Prerequisite {
-    def apply(units:Seq[Unit]) = true
-  }
-
-  case object No extends Prerequisite {
-    def apply(units:Seq[Unit]) = false
-  }
-
-  case class Or(prereqs:Seq[Prerequisite]) extends Prerequisite {
-    def apply(units:Seq[Unit]) = prereqs.foldLeft(false)(_ || _.apply(units))
-  }
-
-  case class And(prereqs:Seq[Prerequisite]) extends Prerequisite {
-    def apply(units:Seq[Unit]) = prereqs.forall(_.apply(units))
-  }
-
-  case class minCP(cps:Int) extends Prerequisite {
-    def apply(units:Seq[Unit]) = units.foldLeft(0)(_ + _.cp) >= cps
-  }
-
-  case class Contains(required: Unit*) extends Prerequisite {
-    def apply(units:Seq[Unit]) = units.diff()
-  }
-
-}
 
 
 object Unit {
@@ -231,3 +162,4 @@ object BComp {
   )
 
 }
+*/

@@ -1,0 +1,42 @@
+.corp-logo {
+  margin: 12px;
+  height: 60px;
+}
+
+body {
+  font-family: "PT Sans", sans-serif;
+
+  background-color: rgb(242, 242, 242);
+  color: rgb(79, 79, 79);
+}
+
+h1, h2, h3, h4 {
+  color: #7d5177;
+}
+
+.inset-space {
+  margin-top: 3.2em;
+}
+
+.inset-tab {
+  padding: 3.2em;
+  background-color: white;
+}
+
+.pic-header .pic-header-img {
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.pic-header .header {
+  background-color: rgba(0,0,0, 0.7);
+}
+
+.pic-header .header .logo img {
+  height: 128px;
+}
+
+.pic-header .site-title {
+  margin-left: 30px;
+  font-size: 30px;
+}

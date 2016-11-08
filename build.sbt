@@ -20,7 +20,7 @@ lazy val core = (crossProject.crossType(CrossType.Pure) in file("modules/core"))
     libraryDependencies ++= Seq(
     )
   )
-  .jsConfigure(_ enablePlugins ScalaJSPlugin)
+  .jsConfigure(_ enablePlugins ScalaJSWeb)
 
 lazy val coreJvm = core.jvm
 lazy val coreJs = core.js
@@ -33,7 +33,7 @@ lazy val cs = (crossProject.crossType(CrossType.Pure) in file("modules/cs"))
     libraryDependencies ++= Seq(
     )
   )
-  .jsConfigure(_ enablePlugins ScalaJSPlugin)
+  .jsConfigure(_ enablePlugins ScalaJSWeb)
 
 lazy val csJvm = cs.jvm
 lazy val csJs = cs.js
@@ -41,7 +41,7 @@ lazy val csJs = cs.js
 lazy val reactjs = project.in(file("modules/reactjs"))
   .settings(commonSettings:_*)
   .dependsOn(coreJs, csJs)
-  .enablePlugins(ScalaJSPlugin)
+  .enablePlugins(ScalaJSPlugin, ScalaJSWeb)
   .settings(
     persistLauncher := true,
     persistLauncher in Test := false
@@ -58,15 +58,13 @@ lazy val play = project.in(file("modules/play"))
   .dependsOn(csJvm, coreJvm)
   .settings(
     scalaJSProjects := sjsProjects,
-    pipelineStages := Seq(scalaJSProd, gzip),
+    pipelineStages in Assets := Seq(scalaJSPipeline),
+    pipelineStages := Seq(digest, gzip),
+    // triggers scalaJSPipeline when using compile or continuous compilation
+    compile in Compile <<= (compile in Compile) dependsOn scalaJSPipeline,
     libraryDependencies ++= Seq(
-    ),
-    routesImport ++= Seq(
-      "com.wbillingsley.handy._",
-      "com.wbillingsley.handy.appbase._",
-      "com.assessory.api._",
-      "com.assessory.play.PathBinders._",
-      "scala.language.reflectiveCalls"
+      "org.webjars" %% "webjars-play" % "2.4.0-2",
+      "com.vmunier" %% "scalajs-scripts" % "1.0.0"
     )
   )
 

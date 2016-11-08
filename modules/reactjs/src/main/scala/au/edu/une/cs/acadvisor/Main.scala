@@ -1,7 +1,7 @@
 package au.edu.une.cs.acadvisor
 
-import au.edu.une.cs.acadvisor.views.Phases
-import japgolly.scalajs.react.React
+import info.tweaked.preview.ui.{MainRouter, Headers}
+import japgolly.scalajs.react.{ReactDOM}
 import org.scalajs.dom.{document, window}
 import japgolly.scalajs.react.vdom.prefix_<^._
 
@@ -19,7 +19,7 @@ object Main extends JSApp {
   }
 
   def rerender():Unit = {
-    React.render(Phases.structure, renderNode)
+    ReactDOM.render(MainRouter.router(), renderNode)
   }
 
 }

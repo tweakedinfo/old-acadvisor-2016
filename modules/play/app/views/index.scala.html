@@ -1,0 +1,38 @@
+@()
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap-flex.min.css" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <!-- Optional theme
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" -->
+
+    <link rel="stylesheet" href="@routes.Assets.at("stylesheets/main.css")">
+
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,400,700' rel='stylesheet' type='text/css'>
+
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700" rel="stylesheet">
+
+    <title></title>
+</head>
+<body>
+    <div id="render-here"></div>
+
+    <script src="https://unpkg.com/react@@15/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@@15/dist/react-dom.js"></script>
+
+  @scalajs.html.scripts("reactjs", routes.Assets.versioned(_).toString, name => getClass.getResource(s"/public/$name") != null)
+
+  <script>
+    au.edu.une.cs.acadvisor.Main().main()
+  </script>
+</body>
+</html>

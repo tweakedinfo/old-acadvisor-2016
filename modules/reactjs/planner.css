@@ -109,3 +109,14 @@
 .fright {
   float: right;
 }
+
+
+.up-from-bottom {
+  height: 0px;
+  position: relative;
+  top: -200px;
+  overflow: display;
+}
+.center {
+  text-align: center;
+}
